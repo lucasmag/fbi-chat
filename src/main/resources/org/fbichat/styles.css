@@ -1,0 +1,13 @@
+.button {
+    -fx-font-weight: bold;
+}
+
+.jfx-list-cell {
+    -fx-background-radius: 20px;
+}
+
+.jfx-list-view {
+    -fx-background-radius: 20px;
+    -fx-background-color: #efefef;
+    -fx-background-insets: 0 ;
+}
