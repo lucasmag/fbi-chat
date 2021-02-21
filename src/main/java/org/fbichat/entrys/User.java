@@ -6,6 +6,8 @@ import org.fbichat.Space;
 import org.fbichat.utils.UserResult;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 @SpaceClass
 public class User implements Serializable {
@@ -47,5 +49,8 @@ public class User implements Serializable {
         }
 
         return UserResult.USER_ALREADY_EXISTS;
+    }
+    public static List<User> getAll(){
+        return Arrays.asList(Space.get().readMultiple(new User(null)).clone());
     }
 }

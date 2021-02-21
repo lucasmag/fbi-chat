@@ -3,7 +3,6 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.layout.*?>
 

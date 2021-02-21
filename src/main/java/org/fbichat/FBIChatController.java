@@ -14,7 +14,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.fbichat.entrys.Message;
 import org.fbichat.entrys.User;
-import org.fbichat.services.UserService;
 import org.fbichat.utils.UserResult;
 
 import java.util.ArrayList;
@@ -80,7 +79,7 @@ public class FBIChatController {
             UserResult result = user.save();
 
             if(result == UserResult.CREATED) {
-                userList.getItems().add(user);
+                userList.getItems().setAll(User.getAll());
                 userWindow.setVisible(false);
 
                 clearUserWindow();
