@@ -1,5 +1,6 @@
 package org.fbichat;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
@@ -13,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.fbichat.entrys.Message;
+import org.fbichat.entrys.Spy;
 import org.fbichat.entrys.User;
 import org.fbichat.utils.UserResult;
 
@@ -54,6 +56,18 @@ public class FBIChatController {
 
     @FXML
     private Label selectedUserLabel;
+
+    @FXML
+    private JFXTextField wordInput;
+
+    @FXML
+    private AnchorPane spyPane;
+
+    @FXML
+    private JFXButton removeWordButton;
+
+    @FXML
+    private JFXListView<Spy> wordList;
 
     User selectedUser;
     User selectedFriend;
@@ -98,9 +112,10 @@ public class FBIChatController {
     @FXML
     void sendMessage(ActionEvent event) {
         String messageToSend = message.getText();
-        if (selectedUser != null && selectedFriend != null && messageToSend != "") {
+        if (selectedUser != null && selectedFriend != null && !messageToSend.equals("")) {
             Message msg = new Message(selectedUser, selectedFriend, messageToSend, new Date());
             msg.send();
+            Spy.scan(msg);
 
             chat.getChildren().setAll(Message.getAll(selectedUser, selectedFriend));
             message.setText("");
@@ -138,8 +153,17 @@ public class FBIChatController {
                 && env != null;
     }
 
+    @FXML
+    void toggleSpy(MouseEvent event) {
+        if (spyPane.getTranslateX() == 0.0)
+            spyPane.setTranslateX(-320.0);
+        else
+            spyPane.setTranslateX(0.0);
+    }
+
     public void initialize() {
         Space.start();
+
         userList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent click) {
@@ -174,5 +198,22 @@ public class FBIChatController {
                 }
             }
         });
+    }
+
+    @FXML
+    void addWord(ActionEvent event) {
+        String word = wordInput.getText();
+        if(!word.equals("")) {
+            Spy spy = new Spy(word);
+            spy.save();
+            wordList.getItems().setAll(Spy.getAll());
+        }
+    }
+
+    @FXML
+    void removeWord(ActionEvent event) {
+        Spy spy = wordList.getSelectionModel().getSelectedItem();
+        Space.get().take(spy);
+        wordList.getItems().setAll(Spy.getAll());
     }
 }

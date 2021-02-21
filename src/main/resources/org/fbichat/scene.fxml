@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -11,9 +13,30 @@
       <JFXListView fx:id="userList" layoutX="267.0" layoutY="219.0" prefHeight="317.0" prefWidth="466.0" />
       <JFXButton layoutX="267.0" layoutY="145.0" onAction="#newUser" prefHeight="43.0" prefWidth="466.0" text="Novo usuário" textFill="#404040">
          <font>
-            <Font name="Ubuntu Thin" size="13.0" />
+            <Font name="Ubuntu Thin" size="19.0" />
          </font>
       </JFXButton>
+      <AnchorPane fx:id="spyPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="319.0" style="-fx-background-color: #ddd;">
+         <children>
+            <ImageView fitHeight="244.0" fitWidth="89.0" layoutX="275.0" layoutY="21.0" onMouseClicked="#toggleSpy" pickOnBounds="true" preserveRatio="true" rotate="13.0">
+               <image>
+                  <Image url="@assets/spy.png" />
+               </image>
+            </ImageView>
+            <Pane prefHeight="600.0" prefWidth="319.0" style="-fx-background-color: #eee;">
+               <children>
+                  <ScrollPane hbarPolicy="NEVER" layoutX="17.0" layoutY="169.0" prefHeight="417.0" prefWidth="285.0">
+                     <content>
+                        <JFXListView fx:id="wordList" prefHeight="415.0" prefWidth="283.0" />
+                     </content>
+                  </ScrollPane>
+                  <JFXTextField fx:id="wordInput" layoutX="17.0" layoutY="14.0" prefHeight="29.0" prefWidth="189.0" />
+                  <JFXButton layoutX="226.0" layoutY="22.0" onAction="#addWord" text="Adicionar" />
+                  <JFXButton fx:id="removeWordButton" cancelButton="true" layoutX="17.0" layoutY="133.0" onAction="#removeWord" prefHeight="29.0" prefWidth="285.0" ripplerFill="RED" text="Remover" />
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
       <AnchorPane id="user-background" fx:id="userWindow" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: white;" visible="false">
          <children>
             <Pane layoutX="300.0" layoutY="150.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #EFEFEF;">
@@ -43,51 +66,55 @@
             </Pane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="userView" layoutX="248.0" layoutY="85.0" prefHeight="460.0" prefWidth="500.0" style="-fx-background-color: #EEEEEE;" visible="false">
+      <AnchorPane fx:id="userView" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #eee;" visible="false">
          <children>
-            <Label fx:id="selectedUserLabel" alignment="CENTER" layoutX="16.0" layoutY="43.0" prefHeight="30.0" prefWidth="473.0" textFill="#616161">
-               <font>
-                  <Font name="Ubuntu Bold" size="26.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="86.0" fitWidth="89.0" layoutX="208.0" layoutY="-44.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@assets/user.png" />
-               </image>
-            </ImageView>
-            <AnchorPane layoutX="17.0" layoutY="85.0" prefHeight="360.0" prefWidth="466.0">
+            <Pane layoutX="257.0" layoutY="111.0" prefHeight="452.0" prefWidth="498.0">
                <children>
-                  <JFXListView fx:id="friendsList" layoutX="9.0" layoutY="43.0" prefHeight="308.0" prefWidth="449.0" />
-                  <Label alignment="CENTER" layoutY="9.0" prefHeight="24.0" prefWidth="89.0" text="Amigos" textFill="#727272">
+                  <Label fx:id="selectedUserLabel" alignment="CENTER" layoutX="14.0" layoutY="36.0" prefHeight="30.0" prefWidth="473.0" textFill="#616161">
                      <font>
-                        <Font name="System Bold Italic" size="18.0" />
+                        <Font name="Ubuntu Bold" size="26.0" />
                      </font>
                   </Label>
+                  <ImageView fitHeight="86.0" fitWidth="89.0" layoutX="206.0" layoutY="-51.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/user.png" />
+                     </image>
+                  </ImageView>
+                  <AnchorPane layoutX="15.0" layoutY="78.0" prefHeight="360.0" prefWidth="466.0">
+                     <children>
+                        <JFXListView fx:id="friendsList" layoutX="9.0" layoutY="43.0" prefHeight="308.0" prefWidth="449.0" />
+                        <Label alignment="CENTER" layoutY="9.0" prefHeight="24.0" prefWidth="89.0" text="Amigos" textFill="#727272">
+                           <font>
+                              <Font name="System Bold Italic" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="chatPane" layoutX="15.0" layoutY="78.0" prefHeight="360.0" prefWidth="466.0" style="-fx-background-color: #DDD;" visible="false">
+                     <children>
+                        <JFXTextArea fx:id="message" layoutX="15.0" layoutY="315.0" prefHeight="36.0" prefWidth="358.0" />
+                        <JFXButton layoutX="373.0" layoutY="319.0" onAction="#sendMessage" prefHeight="29.0" prefWidth="76.0" text="Enviar" />
+                        <Label fx:id="talkingWith" layoutX="136.0" layoutY="15.0" prefHeight="20.0" prefWidth="260.0" textFill="#757575">
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXButton layoutX="399.0" layoutY="10.0" onAction="#backToFriendsList" prefHeight="29.0" prefWidth="60.0" text="Voltar" />
+                        <Label layoutX="14.0" layoutY="15.0" prefHeight="20.0" prefWidth="120.0" text="Conversando com" textFill="#a1a1a1">
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                        </Label>
+                        <ScrollPane layoutX="14.0" layoutY="39.0" prefHeight="274.0" prefWidth="435.0">
+                           <content>
+                              <VBox fx:id="chat" prefHeight="268.0" prefWidth="433.0" />
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
                </children>
-            </AnchorPane>
-            <AnchorPane fx:id="chatPane" layoutX="17.0" layoutY="85.0" prefHeight="360.0" prefWidth="466.0" style="-fx-background-color: #DDD;" visible="false">
-               <children>
-                  <JFXTextArea fx:id="message" layoutX="15.0" layoutY="315.0" prefHeight="36.0" prefWidth="358.0" />
-                  <JFXButton layoutX="373.0" layoutY="319.0" onAction="#sendMessage" prefHeight="29.0" prefWidth="76.0" text="Enviar" />
-                  <Label fx:id="talkingWith" layoutX="136.0" layoutY="15.0" prefHeight="20.0" prefWidth="260.0" textFill="#757575">
-                     <font>
-                        <Font name="System Bold Italic" size="14.0" />
-                     </font>
-                  </Label>
-                  <JFXButton layoutX="399.0" layoutY="10.0" onAction="#backToFriendsList" prefHeight="29.0" prefWidth="60.0" text="Voltar" />
-                  <Label layoutX="14.0" layoutY="15.0" prefHeight="20.0" prefWidth="120.0" text="Conversando com" textFill="#a1a1a1">
-                     <font>
-                        <Font name="System Bold Italic" size="14.0" />
-                     </font>
-                  </Label>
-                  <ScrollPane layoutX="14.0" layoutY="39.0" prefHeight="274.0" prefWidth="435.0">
-                     <content>
-                        <VBox fx:id="chat" prefHeight="268.0" prefWidth="433.0" />
-                     </content>
-                  </ScrollPane>
-               </children>
-            </AnchorPane>
-            <JFXButton layoutX="429.0" layoutY="14.0" onAction="#closeUserView" text="Fechar" />
+            </Pane>
+            <JFXButton layoutX="922.0" layoutY="16.0" onAction="#closeUserView" text="Fechar" />
          </children>
       </AnchorPane>
    </children>
