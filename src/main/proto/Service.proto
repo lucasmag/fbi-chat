@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package service;
+
+option java_multiple_files = true;
+option java_package = "org.fbichat";
+option java_outer_classname = "ServiceProto";
+
+service Service {
+  rpc analyze(Report) returns (None);
+}
+
+message Report {
+  repeated string suspectWords = 1;
+  string content = 2;
+  string from = 3;
+  string to = 4;
+  string date = 5;
+}
+
+message None {}

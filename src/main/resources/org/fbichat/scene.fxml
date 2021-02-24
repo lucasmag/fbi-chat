@@ -16,14 +16,14 @@
             <Font name="Ubuntu Thin" size="19.0" />
          </font>
       </JFXButton>
-      <AnchorPane fx:id="spyPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="319.0" style="-fx-background-color: #ddd;">
+      <AnchorPane fx:id="spyPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="320.0" style="-fx-background-color: #ddd;">
          <children>
             <ImageView fitHeight="244.0" fitWidth="89.0" layoutX="275.0" layoutY="21.0" onMouseClicked="#toggleSpy" pickOnBounds="true" preserveRatio="true" rotate="13.0">
                <image>
                   <Image url="@assets/spy.png" />
                </image>
             </ImageView>
-            <Pane prefHeight="600.0" prefWidth="319.0" style="-fx-background-color: #eee;">
+            <Pane prefHeight="600.0" prefWidth="320.0" style="-fx-background-color: #eee;">
                <children>
                   <ScrollPane hbarPolicy="NEVER" layoutX="17.0" layoutY="169.0" prefHeight="417.0" prefWidth="285.0">
                      <content>

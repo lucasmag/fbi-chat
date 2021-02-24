@@ -16,10 +16,12 @@ import javafx.scene.layout.VBox;
 import org.fbichat.entrys.Message;
 import org.fbichat.entrys.Spy;
 import org.fbichat.entrys.User;
+import org.fbichat.service.Service;
 import org.fbichat.utils.UserResult;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class FBIChatController {
@@ -163,6 +165,8 @@ public class FBIChatController {
 
     public void initialize() {
         Space.start();
+        // TODO refat later...
+        Service ser = new Service("localhost", 40000);
 
         userList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

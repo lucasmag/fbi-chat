@@ -3,7 +3,7 @@ package org.fbichat.entrys;
 import com.gigaspaces.annotation.pojo.SpaceClass;
 import com.gigaspaces.annotation.pojo.SpaceId;
 import org.fbichat.Space;
-import org.fbichat.utils.UserResult;
+import org.fbichat.service.Service;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -39,9 +39,8 @@ public class Spy implements Serializable {
                 .filter(msg::contains)
                 .collect(Collectors.toList());
 
-        for(String word : suspectWords) {
-            System.out.println(word);
-        }
+        if(!suspectWords.isEmpty())
+            Service.analyze(message, suspectWords);
     }
 
     public static List<Spy> getAll() {
