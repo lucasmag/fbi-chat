@@ -2,11 +2,14 @@ package org.fbichat.service;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import org.fbichat.None;
+import org.fbichat.stub.None;
 import org.fbichat.entrys.Message;
-import org.fbichat.Report;
-import org.fbichat.ServiceGrpc;
+import org.fbichat.stub.Report;
+import org.fbichat.stub.ServiceGrpc;
 
+import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Service {
@@ -26,7 +29,9 @@ public class Service {
     public static void analyze(Message message, List<String> suspectWords) {
         Report.Builder msgToAnalyze = Report.newBuilder();
         msgToAnalyze.setContent(message.getContent());
-        msgToAnalyze.setDate(message.getDateTime().toString());
+        msgToAnalyze.setDate(message.getDateTime().toInstant()  // Convert `java.util.Date` to `Instant`.
+                .atOffset( ZoneOffset.of("-3") )  // Transform `Instant` to `OffsetDateTime`.
+                .format( DateTimeFormatter.ISO_LOCAL_DATE_TIME ));
         msgToAnalyze.setFrom(message.getFrom().toString());
         msgToAnalyze.setTo(message.getTo().toString());
         msgToAnalyze.addAllSuspectWords(suspectWords);

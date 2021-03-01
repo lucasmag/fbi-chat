@@ -51,7 +51,7 @@ public class FBIChatController {
     private AnchorPane chatPane;
 
     @FXML
-    private JFXTextArea message;
+    private JFXTextField message;
 
     @FXML
     private AnchorPane userView;
@@ -132,7 +132,7 @@ public class FBIChatController {
     }
 
     @FXML
-    void closeUserView(ActionEvent event) {
+    void closeUserView(MouseEvent event) {
         userView.setVisible(false);
         chatPane.setVisible(false);
         chat.getChildren().clear();
@@ -157,10 +157,10 @@ public class FBIChatController {
 
     @FXML
     void toggleSpy(MouseEvent event) {
-        if (spyPane.getTranslateX() == 0.0)
-            spyPane.setTranslateX(-320.0);
+        if (spyPane.getLayoutX() == 0.0)
+            spyPane.setLayoutX(-320.0);
         else
-            spyPane.setTranslateX(0.0);
+            spyPane.setLayoutX(0.0);
     }
 
     public void initialize() {
@@ -219,5 +219,11 @@ public class FBIChatController {
         Spy spy = wordList.getSelectionModel().getSelectedItem();
         Space.get().take(spy);
         wordList.getItems().setAll(Spy.getAll());
+    }
+
+
+    @FXML
+    void closeSpyPane(MouseEvent event) {
+        spyPane.setLayoutX(-320.0);
     }
 }
